@@ -21,12 +21,13 @@ EOF'
 
 sudo snap restart docker
 
-# 4) download raw files from your GitHub (لینک‌ها درست شد)
+# 4) download raw files from your GitHub
 RAW_APP_URL=https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/app.py
-RAW_DOCKERFILE_URL=https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/refs/heads/main/Dockerfile
+RAW_DOCKERFILE_URL=https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/Dockerfile
 RAW_REQ_URL=https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/requirements.txt
 
-WORKDIR="/tmp/check-host-fastapi"
+# تغییر مسیر کاری به home
+WORKDIR="$HOME/check-host-fastapi"
 mkdir -p "$WORKDIR"
 cd "$WORKDIR"
 
@@ -51,4 +52,3 @@ sudo docker run -d --name "${CONTAINER_NAME}" -p 5000:5000 --restart always "$IM
 
 echo "Done. Service should be reachable on port 5000."
 echo "Try: curl http://localhost:5000/ping/8.8.8.8"
-
