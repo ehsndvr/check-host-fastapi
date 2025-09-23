@@ -23,16 +23,16 @@ sudo snap restart docker
 
 # 4) download raw files from your GitHub (لینک‌ها درست شد)
 RAW_APP_URL="https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/app.py"
-RAW_DOCKERFILE_URL="https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/DockerFile"
+RAW_DOCKERFILE_URL="https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/Dockerfile"
 RAW_REQ_URL="https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/requirements.txt"
 
 WORKDIR="/tmp/check-host-fastapi"
 mkdir -p "$WORKDIR"
 cd "$WORKDIR"
 
-echo "Downloading app.py, DockerFile and requirements.txt from your GitHub raw URLs..."
+echo "Downloading app.py, Dockerfile and requirements.txt from your GitHub raw URLs..."
 curl -fsSL "$RAW_APP_URL" -o app.py
-curl -fsSL "$RAW_DOCKERFILE_URL" -o DockerFile
+curl -fsSL "$RAW_DOCKERFILE_URL" -o Dockerfile
 curl -fsSL "$RAW_REQ_URL" -o requirements.txt
 
 # 5) build Docker image
