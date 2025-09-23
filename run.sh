@@ -51,3 +51,4 @@ sudo docker run -d --name "${CONTAINER_NAME}" -p 5000:5000 --restart always "$IM
 
 echo "Done. Service should be reachable on port 5000."
 echo "Try: curl http://localhost:5000/ping/8.8.8.8"
+
