@@ -23,7 +23,7 @@ sudo snap restart docker
 
 # 4) download raw files from your GitHub (لینک‌ها درست شد)
 RAW_APP_URL="https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/app.py"
-RAW_DOCKERFILE_URL="https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/Dockerfile"
+RAW_DOCKERFILE_URL="https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/DockerFile"
 RAW_REQ_URL="https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/requirements.txt"
 
 WORKDIR="/tmp/check-host-fastapi"
