@@ -12,7 +12,7 @@ sudo apt-get update
 sudo apt-get install -y snapd
 sudo snap install docker
 
-# 3) configure docker registry mirror (مثل نمونه شما)
+# 3) configure docker registry mirror
 sudo bash -c 'cat > /var/snap/docker/current/config/daemon.json <<EOF
 {
   "registry-mirrors": ["https://registry.docker.ir"]
@@ -22,9 +22,9 @@ EOF'
 sudo snap restart docker
 
 # 4) download raw files from your GitHub (لینک‌ها درست شد)
-RAW_APP_URL="https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/app.py"
-RAW_DOCKERFILE_URL="https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/refs/heads/main/Dockerfile"
-RAW_REQ_URL="https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/requirements.txt"
+RAW_APP_URL=https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/app.py
+RAW_DOCKERFILE_URL=https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/refs/heads/main/Dockerfile
+RAW_REQ_URL=https://raw.githubusercontent.com/ehsndvr/check-host-fastapi/main/requirements.txt
 
 WORKDIR="/tmp/check-host-fastapi"
 mkdir -p "$WORKDIR"
