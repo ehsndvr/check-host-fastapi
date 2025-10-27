@@ -2,6 +2,11 @@
 from fastapi import FastAPI, HTTPException
 import subprocess
 import ipaddress
+import socket
+import json
+import time
+from urllib.parse import urlencode
+from urllib.request import urlopen, Request
 
 app = FastAPI(title="Simple Network API Checker")
 
@@ -49,4 +54,67 @@ def ping_ip(ip: str):
                 "ping_stdout": res.stdout.decode(errors="ignore").strip(),
                 "ping_stderr": res.stderr.decode(errors="ignore").strip(),
             }
+        )
+
+@app.get("/tcp/{ip}")
+def tcp_check(ip: str, port: int = 443, timeout: float = 3.0):
+    """
+    Check if a TCP connection can actually be established to the given IP and port.
+    Returns success only if handshake + minimal send is successful.
+    """
+    # Validate IP
+    try:
+        ipaddress.ip_address(ip)
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid IP address")
+
+    # Create TCP socket
+    try:
+        # Force IPv4; for IPv6 use AF_INET6
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
+            sock.settimeout(timeout)
+
+            # Try to connect (TCP handshake)
+            sock.connect((ip, port))
+
+            # Minimal send to confirm connection is fully established
+            try:
+                sock.send(b'\x00')  # ارسال یک بایت تستی
+            except Exception as e:
+                raise HTTPException(
+                    status_code=502,
+                    detail={
+                        "status": "error",
+                        "ip": ip,
+                        "port": port,
+                        "message": f"Connection established but send failed: {e}",
+                    },
+                )
+
+            return {
+                "status": "ok",
+                "ip": ip,
+                "port": port,
+                "message": "TCP connection fully established",
+            }
+
+    except socket.timeout:
+        raise HTTPException(
+            status_code=504,
+            detail={
+                "status": "error",
+                "ip": ip,
+                "port": port,
+                "message": "Connection timed out",
+            },
+        )
+    except (ConnectionRefusedError, OSError) as e:
+        raise HTTPException(
+            status_code=502,
+            detail={
+                "status": "error",
+                "ip": ip,
+                "port": port,
+                "message": f"Connection failed: {e}",
+            },
         )
